@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block header %}
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#" style="font-size: 50px; font-family:fantasy;">TexTrade</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">マイページ <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">カテゴリ</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                カテゴリ
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+<div class="alert alert-info"  role="alert"> 
+    <h3>マイページ</h3>
+  </div>
+{% endblock header %}
+{% block content %}
+<form action='' method='POST' enctype='multipart/form-data'>{% csrf_token %}
+    <table>
+    <tr>
+        <td>性別</td>
+        <td><input type='radio' name='gender' value="male" checked="checked" />男性
+            <input type='radio' name='gender' value="female" />女性</td>
+    </tr>
+    <tr>
+        <td>大学</td>
+        <td><select name="college">
+            <option>明治大学</option>
+            <option>立教大学</option>
+            <option>中央大学</option>
+            <option>法政大学</option>
+            <option>慶應義塾大学</option>
+            <option>早稲田大学</option>
+            <option>東京大学</option>
+            <option>京都大学</option>
+            <option>横浜国立大学</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>自己紹介</td>
+        <td><textarea name="intro" row="4" cols="40">自己紹介文です</textarea></td>
+    </tr>
+    </table>
+    <input type='hidden' name='user' value='{{user.username}}'>
+    <input type='submit' value='保存する'/>
+    <input type="reset" value='取り消し'/>
+    </form>
+{% endblock content %}
+{% block footer %}
+{% endblock footer %}

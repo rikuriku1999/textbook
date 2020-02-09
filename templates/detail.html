@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block customcss %}
+<style>
+div.image{
+  width:410px;
+  border-color: black;
+  border:solid;
+  margin-bottom:20px;
+  text-align: center;
+}
+
+div.box{
+    width:700px;
+    margin:auto;
+    background-color:#FFFFFF;
+    text-align: left;
+    position: relative;}
+    
+address{background-color: lightskyblue;
+    color: #FFFFFF;
+    text-align: center;
+    position: relative;
+    bottom:0px;
+    width:100%;
+    }
+address a{color:#FFFEFF}
+h2{text-align: center;}
+</style>
+{% endblock customcss %}
+
+{% block header %}
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'list' %}" style="font-size: 50px; font-family:fantasy;">TexTrade</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">マイページ<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">カテゴリ</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                カテゴリ
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+          </ul>
+          
+        </div>
+      </nav>
+    </header>
+<div class="alert alert-info"  role="alert"> 
+ 
+  </div>
+{% endblock header %}
+
+{% block content %}
+<div class='box'>
+<h2>{{ object_list.title }}</h2>
+<div class="image" align="center">{% if object_list.images %}
+<p><img src="{{object_list.images.url}}" width=400 height=300  alt="..."></p>
+{% endif %}</div>
+<table border="1" width="500" cellspacing="0" cellpadding="5" bordercolor="#333333">
+<tr>
+<td bgcolor="87cefa" valign="top" width="150" align="center"><a href="{% url 'profile' object_list.pk %}">出品者</p></td>
+<td><p>{{ object_list.author }}</p></td></tr>
+<tr>
+<td bgcolor="87cefa" align="center"><p>内容</p></td>
+<td><p>{{ object_list.content }}</p></td></tr>
+<tr>
+<td bgcolor="87cefa" align="center"><p>大学</p></td>
+<td ><p>{{ object_list.collegecategory }}</p></td></tr>
+<tr>
+  <td bgcolor="87cefa" align="center"><p>状態</p></td>
+  <td><p>{{ object_list.status }}</p></td></tr>
+  <tr>
+    <td bgcolor="87cefa" align="center"><p>値段</p></td>
+    <td><p>￥{{ object_list.price }}</p></td></tr>
+</table>
+
+<a href="{% url 'good' object_list.pk %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">いいね:{{object_list.good}}</a>
+{% ifequal user.username object_list.author %}
+<a href="{% url 'editdetail' object_list.pk %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">投稿編集</a>
+{% endifequal %}
+{% ifnotequal user.username object_list.author %}
+<a href="{% url 'chatroom' object_list.pk %}" class="btn btn-success btn-lg active" role="button" aria-pressed="true">取引する</a>
+{% endifnotequal %}
+
+
+<h2>コメント一覧</h2>
+{% for comment in comments %}
+    <hr>
+     {{comment.author }}<br>
+     {{ comment.text }}<br>
+     <hr>
+{% endfor %}
+<form action='' method='POSt' enctype='multipart/form-data'>
+    {% csrf_token %}
+    <div class="form-group mx-sm-3 mb-2">
+      <label class="sr-only">コメント</label>
+      {{form.as_p}}
+      <input type="submit">
+    </div>
+  </form>
+</div>
+{% endblock content %}
+
+{% block footer %}
+<address>
+    Copy Right <a href="">TexTrade</a>
+     Co.,Ltd. since 2020
+  </address>
+{% endblock footer %}

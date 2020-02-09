@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% block customscript %}
+<script type="text/javascript">
+
+    // HTMLの読み込み直後に実行：
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // ▼とりあえずサブBOXを全て非表示にする（CSSで書けば早いが）
+        var allSubBoxes = document.getElementsByClassName("subbox");
+        for( var i=0 ; i<allSubBoxes.length ; i++) {
+            allSubBoxes[i].style.display = 'none';
+        }
+
+        // ▼全てのプルダウンボックスごとに処理
+        var mainBoxes = document.getElementsByClassName('pulldownset');
+        for( var i=0 ; i<mainBoxes.length ; i++) {
+
+            var mainSelect = mainBoxes[i].getElementsByClassName("mainselect");	// メインのプルダウンメニュー（※後でvalue属性値を参照するので、select要素である必要があります。）
+            mainSelect[0].onchange = function () {
+                // 同じ親要素に含まれている全サブBOXを消す
+                var subBox = this.parentNode.getElementsByClassName("subbox");	// 同じ親要素に含まれる.subbox（※select要素に限らず、どんな要素でも構いません。）
+                for( var j=0 ; j<subBox.length ; j++) {
+                    subBox[j].style.display = 'none';
+                }
+
+                // 指定されたサブBOXを表示する
+                if( this.value ) {
+                    var targetSub = document.getElementById( this.value );	// 「メインのプルダウンメニューで選択されている項目のvalue属性値」と同じ文字列をid属性値に持つ要素を得る
+                    targetSub.style.display = 'inline';
+                }
+            }
+
+        }
+
+    });
+</script>
+    
+{% endblock customscript %}
+{% block customcss %}
+{% endblock customcss %}
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+
+
+<form action='' method='POST' enctype='multipart/form-data'>{% csrf_token %}
+<table>
+<tr>
+    <td>タイトル</td>
+    <td><input type='text' name='title'></td>
+</tr>
+<tr>
+    <td>内容</td>
+    <td><input type='text' name='content'></td>
+</tr>
+<tr>
+    <td>画像</td>
+    <td><input type='file' name='images'></td>
+</tr>
+<tr>
+    <td>状態</td>
+    <td><select name="status">
+        <option>状態を選択</option>>
+        <option>きれい</option>
+        <option>少し書き込みあり</option>
+        <option>かなり書き込みあり</option>
+        <option>あまりきれいでない</option>
+      </select>
+    </td>
+</tr>
+<tr>
+    
+    <td>大学</td>
+    <td><div class="pulldownset college">
+        <select class="mainselect" name="collegecategory">
+        <option value=''>大学を選択</option>
+        <option value="慶應義塾大学">慶應義塾大学</option>
+        <option value="waseda">早稲田大学</option>
+        <option value="aoyama">青山学院大学</option>
+        <option value="meiji">明治大学</option>
+      </select>
+      <select class="subbox" id="慶應義塾大学" name="facultycategory">
+        <option value=''>学部を選択</option>
+        <option value='経済学部' name="facultycategory">経済学部</option>
+        <option value='rk'>理工学部</option>
+        <option value='sy'>商学部</option>
+        <option value='bn'>文学部</option>
+      </select>
+      <select id="waseda" class="subbox" name="facultycategory">
+        <option value=''>学部を選択</option>
+        <option value='nk'>人間科学部</option>
+        <option value='sr'>先進理工学部</option>
+        <option value='sz'>創造理工学部</option>
+        <option value='kr'>基幹理工学部</option>
+        <option value='so'>商学部</option>
+        <option value='bk'>文化構想部</option>
+        <option value='sk'>政治経済学部</option>
+      </select>
+        <select id="aoyama" class="subbox" name="facultycategory">
+        <option value=''>学部を選択</option>
+        <option value='ask'>政治経済学部</option>
+        <option value='r'>理学部</option>
+        <option value='k'>工学部</option>
+        <option value='bu'>文学部</option>
+      </select>
+      <select id="meiji" class="subbox" name="facultycategory">
+        <option value=''>学部を選択</option>
+        <option value='msk'>政治経済学部</option>
+        <option value='mr'>理学部</option>
+        <option value='mb'>文学部</option>
+        <option value='kt'>建築学部</option>
+      </select>
+      </div>
+    </td>
+</tr>
+<tr>
+    <td>値段</td>
+    <td><input type='tel' name='price'></td>
+</tr>
+<input type='hidden' name='author' value='{{user.username}}'>
+</table>
+<input type='submit' value='作成する'>
+</form>
+
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}

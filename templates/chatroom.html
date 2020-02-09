@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block customcss %}
+<style>
+div.box{
+   width:600px;
+  margin:auto;
+  text-align: center;
+  position: relative;
+  padding-right:0px;
+  }
+
+div.messagebox{
+  position:relative;
+  bottom:0px;
+  left:110px;
+}
+
+div.message{
+  position:relative;
+  left:150px;
+  background-color: rgb(150, 217, 219,0.7);
+  border-radius: 5px;
+  padding:0;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  max-width: 500px;
+  display: inline-block;
+  padding-left: 20px;
+  padding-right: 20px;
+  border:solid;
+  border-color:rgb(51, 50, 50,0.6);
+}
+
+div.messageif{
+  position:relative;
+  right:150px;
+  background-color: rgb(150, 217, 219,0.7);
+  border-radius: 5px;
+  padding:0;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  max-width: 500px;
+  display: inline-block;
+  padding-left: 20px;
+  padding-right: 20px;
+  border:solid;
+  border-color:rgb(51, 50, 50,0.6);
+}
+
+div.content{
+  width:100%;
+  background-color:rgb(255, 255, 255);
+  padding:30px;
+}
+
+div.chatbox{
+  border:solid;
+  border-radius: 30px 30px 0 0;
+  background-color:rgb(206, 236, 193);
+}
+</style>
+{% endblock customcss %}
+{% block header %}
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'list' %}" style="font-size: 50px; font-family:fantasy;">TexTrade</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">マイページ <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">カテゴリ</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                カテゴリ
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+<div class="alert alert-info"  role="alert"> 
+    <h3>取引画面</h3>
+  </div>
+{% endblock header %}
+{% block content %}
+<div class='box'>
+<div class='content'>
+  <h2>{{ object_list.title }}</h2>
+<div class="image">{% if object_list.images %}
+<p><img src="{{object_list.images.url}}" width=400 height=300  alt="..."></p>
+{% endif %}</div>
+<table border="1" width="500" cellspacing="0" cellpadding="5" bordercolor="#333333">
+<tr>
+<td bgcolor="87cefa" valign="top" width="150" align="center"><p>出品者</p></td>
+<td><p>{{ object_list.author }}</p></td></tr>
+<tr>
+<td bgcolor="87cefa" align="center"><p>内容</p></td>
+<td><p>{{ object_list.content }}</p></td></tr>
+<tr>
+<td bgcolor="87cefa" align="center"><p>大学</p></td>
+<td ><p>{{ object_list.collegecategory }}</p></td></tr>
+<tr>
+  <td bgcolor="87cefa" align="center"><p>状態</p></td>
+  <td><p>{{ object_list.status }}</p></td></tr>
+  <tr>
+    <td bgcolor="87cefa" align="center"><p>値段</p></td>
+    <td><p>￥{{ object_list.price }}</p></td></tr>
+</table>
+</div>
+<div class='chatbox'>
+    {% for message in chats%}
+    {% if message.sender == user.username %}
+    <div class="message">{{ message.text }} :    {{ message.sender }}</div><br>
+    {% endif %}
+    {% if message.sender != user.username %}
+    <div class="messageif">{{ message.sender }} : {{ message.text }}</div><br>
+    {% endif %}
+    {% endfor %}
+</div>
+    <div class='messagebox'>
+    <form action='' method='POSt' enctype='multipart/form-data'>
+      {% csrf_token %}
+        <h4>
+        {{form}}
+        <input type="submit"></h4>
+    </form>
+    </div>
+</div>
+
+{% endblock content %}
+{% block footer %}
+{% endblock footer %}
