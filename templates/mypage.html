@@ -2,7 +2,7 @@
 {% block customcss %}
 <style>
 div.box{
-   width:1000px;
+   width:100%;
   margin:auto;
   background-color:#FFFFFF;
   text-align: left;
@@ -18,18 +18,18 @@ address{background-color: lightskyblue;
 address a{color:#FFFEFF}
 
 div.card-card{
-    margin:5px;
+    margin:1px;
     display: inline-block;
-    width:150px;
+    width:115px;
     position: relative;
     z-index: 1;
-    height:150;  
+    height:115;  
 }
 
 div.card-b h6{
   color: rgb(248, 244, 244);
   text-align: center;
-
+  font-size: 14px;
 }
 
 div.listcontainer{
@@ -38,8 +38,8 @@ div.listcontainer{
 
 div.card-b{
   width:100%;
-  background-color:lightslategray;
-  height:20px;
+  background-color:rgb(102, 125, 148);
+  height:30px;
   position:absolute;
   bottom:0;
 }
@@ -65,6 +65,36 @@ div.post{
   right:50px;
 }
 
+div.image{
+  position:relative;
+  border-color:black;
+}
+div.price{
+  width:60%;
+  height:18px;
+  bottom:43px;
+  left:0px;
+  position:absolute;
+  background-color:rgba(111, 170, 230, 0.9);
+  border-radius: 0px;
+}
+div.price p{
+  color:white;
+  margin-bottom: 1px;
+  font-size: 14px;
+}
+
+div.trading{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    top: 26%;
+    left: 30%;
+    width: 5px;
+    height: 5px;
+}
 </style>
 {% endblock customcss %}
 {% block header %}
@@ -78,25 +108,33 @@ div.post{
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">マイページ <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">カテゴリ</a>
+              {% if boolean == True %}
+              <a class="nav-link" href="{% url 'mypage' %}">マイページ <span class="sr-only">(current)</span></a>
+              {% else %}
+              <a class="nav-link" href="{% url 'editmypage' %}">マイページ <span class="sr-only">(current)</span></a>
+              {% endif %}
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                カテゴリ
+                大学カテゴリ
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="{% url 'aoyama' %}">青山学院大学</a>
+                <a class="dropdown-item" href="{% url 'keio' %}">慶應義塾大学</a>
+                <a class="dropdown-item" href="#">早稲田大学</a>
+                <a class="dropdown-item" href="#">and so on</a>
                 <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
+                <a class="dropdown-item" href="#">Another action</a>
             </li>
+            {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
+              <a class="nav-link " href="{% url 'logout' %}">ログアウト</a>
             </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'login' %}">ログイン</a>
+            </li>
+            {% endif %}
           </ul>
           <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -111,27 +149,40 @@ div.post{
 {% endblock header %}
 {% block content %}
 <div class="box">
-<ul>
-  <li>名前: {{ user.username }}</li>
-  <li>性別: {{ user.profile.gender }}</li>
-  <li>大学: {{ user.profile.college }}</li>
-  <li>自己紹介: {{ user.profile.intro }}</li>
-</ul>
+<table>
+  <tr>
+  <td>名前</td><td>{{ user.profile.username }}</td>
+  </tr>
+  <tr>
+  <td>性別</td><td>{{ user.profile.gender }}</td>
+  </tr>
+  <tr>
+  <td>大学</td><td>{{ user.profile.college }}</td>
+  </tr>
+  <tr>
+  <td>自己紹介</td><td>{{ user.profile.intro }}</td>
+  </tr>
+</table>
 <a href="{% url 'editmypage' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">プロフィール編集</a>
 <h3>取引中の教科書</h3>
     <div class="listcontainer">
     {% for item in trading %}
-    <div class="card-card" >
-    <a href="{% url 'chatroom' item.pk %}"></a>
-    <div class="card" style="width: 150px; height: 150px;">
-      {% if item.images %}
-        <p><img src="{{item.images.url}}" width=150 height=110 class="card-img-top" alt="..."></p>
-      {% endif %}
-        <div class="card-b">
-          <h6 class="card-title">{{item.title}}</h6>
-        </div>
-      </div>
+<div class="card-card" >
+<a href="{% url 'chatroom' item.pk %}"></a>
+<div class="card" style="width: 115px; height: 115px;">
+  <div class="image">
+  {% if item.images %}
+    <p><img src="{{item.images.url}}" width=150 height=110 class="card-img-top" alt="..."></p>
+  {% endif %}
+  <div class="trading"><img src="/medi/trading.png" width=80px height=80px></div>
+  <div class="price"><p>￥{{item.price}}</p>
+  </div>
+  </div>
+    <div class="card-b">
+      <h6 class="card-title">{{item.title}}</h6>
     </div>
+  </div>
+</div>
     {% endfor%}
     </div>
 <br>
@@ -139,21 +190,32 @@ div.post{
     <div class="listcontainer">
     {% for item in post %}
     <div class="card-card" >
-    <a href="{% url 'detail' item.pk %}"></a>
-    <div class="card" style="width: 150px; height: 150px;">
-      {% if item.images %}
-        <p><img src="{{item.images.url}}" width=150 height=110 class="card-img-top" alt="..."></p>
-      {% endif %}
-        <div class="card-b">
-          <h6 class="card-title">{{item.title}}</h6>
+      <a href="{% url 'detail' item.pk %}"></a>
+      <div class="card" style="width: 115px; height: 115px;">
+        <div class="image">
+        {% if item.images %}
+          <p><img src="{{item.images.url}}" width=150 height=110 class="card-img-top" alt="..."></p>
+        {% endif %}
+        <div class="price"><p>￥{{item.price}}</p>
+        </div>
+        </div>
+          <div class="card-b">
+            <h6 class="card-title">{{item.title}}</h6>
+          </div>
         </div>
       </div>
-    </div>
     {% endfor%}
     </div>
     <div class="post"><a href="{% url 'create' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">新規投稿</a>
     </div>
     </div>
+    <script>
+      if (window.name != "xyz")
+    {
+      location.reload();
+      window.name = "xyz";
+    }
+    </script>
 
 {% endblock content %}
 {% block footer %}

@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+{% block customcss %}
+
+<style>
+div.box{
+   width:100%;
+  margin:auto;
+  background-color:#FFFFFF;
+  text-align: left;
+  position: relative;}
+
+address{background-color: lightskyblue;
+  color: #FFFFFF;
+  text-align: center;
+  position: fixed;
+  bottom:0px;
+  width:100% ;
+  }
+address a{color:#FFFEFF}
+
+div.card-card{
+    margin:1px;
+    display: inline-block;
+    width:115px;
+    position: relative;
+    z-index: 1;
+    height:115;  
+}
+
+div.card-b h6{
+  color: rgb(248, 244, 244);
+  text-align: center;
+  font-size: 14px;
+}
+
+div.listcontainer{
+    padding: 0px;
+}
+
+div.card-b{
+  width:100%;
+  background-color:rgb(102, 125, 148);
+  height:30px;
+  position:absolute;
+  bottom:0;
+}
+
+div.card-card a{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-indent:-999px;
+    z-index: 2; /* 必要であればリンク要素の重なりのベース順序指定 */
+}
+
+ div.card{
+    padding: 0px;
+}
+
+div.post{
+  position: fixed;
+  color: aqua;
+  bottom:50px;
+  right:50px;
+}
+
+div.image{
+  position:relative;
+  border-color:black;
+}
+div.price{
+  width:60%;
+  height:18px;
+  bottom:43px;
+  left:0px;
+  position:absolute;
+  background-color:rgba(111, 170, 230, 0.9);
+  border-radius: 0px;
+}
+div.price p{
+  color:white;
+  margin-bottom: 1px;
+  font-size: 14px;
+}
+
+div.trading{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    top: 26%;
+    left: 30%;
+    width: 5px;
+    height: 5px;
+}
+</style>
+{% endblock customcss %}
+{% block header %}
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'list' %}" style="font-size: 50px; font-family:fantasy;">TexTrade</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              {% if boolean == True %}
+              <a class="nav-link" href="{% url 'mypage' %}">マイページ <span class="sr-only">(current)</span></a>
+              {% else %}
+              <a class="nav-link" href="{% url 'editmypage' %}">マイページ <span class="sr-only">(current)</span></a>
+              {% endif %}
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                大学カテゴリ
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'aoyama' %}">青山学院大学</a>
+                <a class="dropdown-item" href="{% url 'keio' %}">慶應義塾大学</a>
+                <a class="dropdown-item" href="#">早稲田大学</a>
+                <a class="dropdown-item" href="#">and so on</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'logout' %}">ログアウト</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'login' %}">ログイン</a>
+            </li>
+            {% endif %}
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+<div class="alert alert-info"  role="alert"> 
+    <h3>マイページ</h3>
+  </div>
+{% endblock header %}
+{% block content %}
+<div class="box">
+<table>
+  <tr>
+  <td>名前</td><td>{{ user.profile.username }}</td>
+  </tr>
+  <tr>
+  <td>性別</td><td>{{ user.profile.gender }}</td>
+  </tr>
+  <tr>
+  <td>大学</td><td>{{ user.profile.college }}</td>
+  </tr>
+  <tr>
+  <td>自己紹介</td><td>{{ user.profile.intro }}</td>
+  </tr>
+</table>
+<a href="{% url 'editmypage' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">プロフィール編集</a>
+
+<ul class="nav">
+  <li><a href="c1">取引中の教科書</a></li>
+  <li><a href="c2">出品した教科書</a></li>
+</ul>
+<div id="c1" class="section">
+<h3>取引中の教科書</h3>
+    <div class="listcontainer">
+    {% for item in trading %}
+<div class="card-card" >
+<a href="{% url 'chatroom' item.pk %}"></a>
+<div class="card" style="width: 115px; height: 115px;">
+  <div class="image">
+  {% if item.images %}
+    <p><img src="{{item.images.url}}" width=150 height=110 class="card-img-top" alt="..."></p>
+  {% endif %}
+  <div class="trading"><img src="/medi/trading.png" width=80px height=80px></div>
+  <div class="price"><p>￥{{item.price}}</p>
+  </div>
+  </div>
+    <div class="card-b">
+      <h6 class="card-title">{{item.title}}</h6>
+    </div>
+  </div>
+</div>
+    {% endfor%}
+    </div>
+<br>
+  </div>
+  <div id="c2" class="section">
+<h3>出品した教科書</h3>
+    <div class="listcontainer">
+    {% for item in post %}
+    <div class="card-card" >
+      <a href="{% url 'detail' item.pk %}"></a>
+      <div class="card" style="width: 115px; height: 115px;">
+        <div class="image">
+        {% if item.images %}
+          <p><img src="{{item.images.url}}" width=150 height=110 class="card-img-top" alt="..."></p>
+        {% endif %}
+        <div class="price"><p>￥{{item.price}}</p>
+        </div>
+        </div>
+          <div class="card-b">
+            <h6 class="card-title">{{item.title}}</h6>
+          </div>
+        </div>
+      </div>
+    {% endfor%}
+    </div>
+    </div>
+    <div class="post"><a href="{% url 'create' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">新規投稿</a>
+    </div>
+    </div>
+    <script>
+      if (window.name != "xyz")
+    {
+      location.reload();
+      window.name = "xyz";
+    }
+    </script>
+    <script>
+      $(function() {
+        var pages = $('.section');
+        //sectionを全て非表示
+        pages.hide();
+        //最初のsectionを表示
+        pages.eq(0).fadeIn();
+      
+        $('.nav a').click(function(event){
+            event.preventDefault();
+            var nextPage = this.hash;
+            pages.hide();
+            $(nextPage).fadeIn();
+        });
+      });
+      </script>
+
+{% endblock content %}
+{% block footer %}
+{% endblock footer %}

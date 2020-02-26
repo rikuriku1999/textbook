@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% block customcss %}
+<style>
+div.box{
+   width:100%;
+  margin:auto;
+  text-align: center;
+  position: relative;
+  padding-right:0px;
+  }
+
+div.messagebox{
+  position:relative;
+  bottom:0px;
+  left:0px;
+}
+
+div.msg{
+  padding-top: 15px;
+}
+
+
+
+div.message{
+  position:absolute;
+  right:5px;
+  background-color: rgb(150, 217, 219,0.7);
+  border-radius: 5px;
+  padding:0;
+  margin-top: 18px;
+  margin-bottom: 18px;
+  max-width: 100%;
+  display: inline-block;
+  padding-left: 20px;
+  padding-right: 20px;
+  border:solid;
+  border-width: 1px;
+  border-color:rgb(51, 50, 50,0.6);
+}
+
+div.messageif{
+  position: absolute;;
+  left:5px;
+  background-color: rgb(150, 217, 219,0.7);
+  border-radius: 5px;
+  margin-top: 18px;
+  margin-bottom: 18px;
+  max-width: 100%;
+  display: inline-block;
+  padding-left: 20px;
+  padding-right: 20px;
+  border:solid;
+  border-width:1px;
+  border-color:rgb(51, 50, 50,0.6);
+}
+
+div.content{
+  width:100%;
+  background-color:rgb(255, 255, 255);
+  padding:30px;
+}
+
+div.chatbox{
+  border:solid;
+  border-radius: 30px 30px 0 0;
+  background-color:rgb(206, 236, 193);
+  padding:20px;
+}
+
+div.date{
+  position: absolute;
+  right:10px;
+  margin-top: -18px;
+}
+
+div.date p{
+  font-size: 10px;
+}
+div.dateif{
+  position: absolute;
+  left:10px;
+  margin-top: -18px;
+}
+
+div.dateif p{
+  font-size: 10px;
+}
+</style>
+
+{% endblock customcss %}
+{% block header %}
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'list' %}" style="font-size: 50px; font-family:fantasy;">TexTrade</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">マイページ <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">カテゴリ</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                カテゴリ
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+<div class="alert alert-info"  role="alert"> 
+    <h4>{{ object_list.title }}の取引画面</h4>
+  </div>
+{% endblock header %}
+{% block content %}
+<div class='box'>
+ <p>一対一のチャットボックスです。<br>日時や場所を決めるためにメッセージを送りましょう。</p>
+  <div class='chatbox'>
+    {% for message in chats%}
+    <div class="msg">
+    {% if message.sender == profile.username %}
+    <div class="message">{{ message.text }} </div><br>
+    <div class="date"><p>{{ message.created_date }}</p></div>
+    {% endif %}
+    {% if message.sender != profile.username %}
+    <div class="messageif">{{ message.sender }} : {{ message.text }}</div><br>
+    <div class="dateif"><p>{{ message.created_date }}</p></div>
+    {% endif %}
+    </div>
+    {% endfor %}
+</div>
+<?php
+function my_shortcode_handler( $atts ) {
+
+    if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
+        session_start();
+        if( isset( $_SESSION["key"], $_POST["key"] ) && $_SESSION["key"] == $_POST["key"] ) {
+            unset( $_SESSION["key"] );
+            my_handle_form_submitted();
+        } else {
+            header("Location:{% url 'chatroom' object_list.pk %}" . get_permalink() );
+        }
+    }
+
+    session_start();
+    $_SESSION["key"] = md5(uniqid().mt_rand());
+    ?>
+<?php ob_start(); ?>
+    <div class='messagebox'>
+    <form action='<?php the_permalink(); ?>' method='POSt' enctype='multipart/form-data' value=''>
+      {% csrf_token %}
+      <input type="hidden" name="key" value="<?php echo htmlspecialchars( $_SESSION['key'], ENT_QUOTES );?>">
+        {{form.text}}
+        <button type="submit" name="example" value="ボタン"></button>
+        <input type="reset"/>
+    </form>
+    </div>
+    <?php return ob_get_clean(); ?>
+<?php
+}
+add_shortcode( 'my-shortcode-tag', 'my_shortcode_handler' );
+
+<div class='content'>
+  <h2>{{ object_list.title }}</h2>
+<div class="image">{% if object_list.images %}
+<p><img src="{{object_list.images.url}}" width=95% height=300  alt="..."></p>
+{% endif %}</div>
+<table border="1" width="100%" cellspacing="0" cellpadding="5" bordercolor="#333333" align="center">
+<tr>
+<td bgcolor="87cefa" valign="top" width="100px" align="center"><p>出品者</p></td>
+<td><p>{{ object_list.author }}</p></td></tr>
+<tr>
+<td bgcolor="87cefa" align="center"><p>内容</p></td>
+<td><p>{{ object_list.content }}</p></td></tr>
+<tr>
+<td bgcolor="87cefa" align="center"><p>大学</p></td>
+<td ><p>{{ object_list.collegecategory }}</p></td></tr>
+<tr>
+  <td bgcolor="87cefa" align="center"><p>キャンパス</p></td>
+  <td ><p>{{ object_list.campus }}</p></td></tr>
+<tr>
+  <td bgcolor="87cefa" align="center"><p>状態</p></td>
+  <td><p>{{ object_list.status }}</p></td></tr>
+  <tr>
+    <td bgcolor="87cefa" align="center"><p>値段</p></td>
+    <td><p>￥{{ object_list.price }}</p></td></tr>
+</table>
+</div>
+
+    <a href="{% url 'succeed' object_list.pk %}" class="btn btn-success btn-lg active" role="button" aria-pressed="true">取引完了</a>
+    <a href="{% url 'fail' object_list.pk %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">取引を取り消す</a>
+</div>
+
+{% endblock content %}
+{% block footer %}
+{% endblock footer %}

@@ -2,7 +2,7 @@
 {% block customcss %}
 <style>
 div.box{
-   width:600px;
+   width:100%;
   margin:auto;
   text-align: center;
   position: relative;
@@ -12,38 +12,46 @@ div.box{
 div.messagebox{
   position:relative;
   bottom:0px;
-  left:110px;
+  left:0px;
+  height:100px;
 }
 
+div.msg{
+  padding-top: 15px;
+}
+
+
+
 div.message{
-  position:relative;
-  left:150px;
+  position:absolute;
+  right:5px;
   background-color: rgb(150, 217, 219,0.7);
   border-radius: 5px;
   padding:0;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  max-width: 500px;
+  margin-top: 18px;
+  margin-bottom: 18px;
+  max-width: 100%;
   display: inline-block;
   padding-left: 20px;
   padding-right: 20px;
   border:solid;
+  border-width: 1px;
   border-color:rgb(51, 50, 50,0.6);
 }
 
 div.messageif{
-  position:relative;
-  right:150px;
+  position: absolute;;
+  left:5px;
   background-color: rgb(150, 217, 219,0.7);
   border-radius: 5px;
-  padding:0;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  max-width: 500px;
+  margin-top: 18px;
+  margin-bottom: 18px;
+  max-width: 100%;
   display: inline-block;
   padding-left: 20px;
   padding-right: 20px;
   border:solid;
+  border-width:1px;
   border-color:rgb(51, 50, 50,0.6);
 }
 
@@ -57,6 +65,26 @@ div.chatbox{
   border:solid;
   border-radius: 30px 30px 0 0;
   background-color:rgb(206, 236, 193);
+  padding:20px;
+}
+
+div.date{
+  position: absolute;
+  right:10px;
+  margin-top: -18px;
+}
+
+div.date p{
+  font-size: 10px;
+}
+div.dateif{
+  position: absolute;
+  left:10px;
+  margin-top: -18px;
+}
+
+div.dateif p{
+  font-size: 10px;
 }
 </style>
 {% endblock customcss %}
@@ -99,19 +127,43 @@ div.chatbox{
       </nav>
     </header>
 <div class="alert alert-info"  role="alert"> 
-    <h3>取引画面</h3>
+    <h4>{{ object_list.title }}の取引画面</h4>
   </div>
 {% endblock header %}
 {% block content %}
 <div class='box'>
+ <p>一対一のチャットボックスです。<br>日時や場所を決めるためにメッセージを送りましょう。</p>
+  <div class='chatbox'>
+    {% for message in chats%}
+    <div class="msg">
+    {% if message.sender == profile.username %}
+    <div class="message">{{ message.text }} </div><br>
+    <div class="date"><p>{{ message.created_date }}</p></div>
+    {% endif %}
+    {% if message.sender != profile.username %}
+    <div class="messageif">{{ message.sender }} : {{ message.text }}</div><br>
+    <div class="dateif"><p>{{ message.created_date }}</p></div>
+    {% endif %}
+    </div>
+    {% endfor %}
+</div>
+    <div class='messagebox'>
+    <form action='' method='POSt' enctype='multipart/form-data' value=''>
+      {% csrf_token %}
+        <h4>
+        {{form.text}}
+        <input type="button" value='送信' onclick="rset(this.form)"></h4>
+    </form>
+    </div>
+
 <div class='content'>
   <h2>{{ object_list.title }}</h2>
 <div class="image">{% if object_list.images %}
-<p><img src="{{object_list.images.url}}" width=400 height=300  alt="..."></p>
+<p><img src="{{object_list.images.url}}" width=100% height=300  alt="..."></p>
 {% endif %}</div>
-<table border="1" width="500" cellspacing="0" cellpadding="5" bordercolor="#333333">
+<table border="1" width="100%" cellspacing="0" cellpadding="5" bordercolor="#333333" align="center">
 <tr>
-<td bgcolor="87cefa" valign="top" width="150" align="center"><p>出品者</p></td>
+<td bgcolor="87cefa" valign="top" width="100px" align="center"><p>出品者</p></td>
 <td><p>{{ object_list.author }}</p></td></tr>
 <tr>
 <td bgcolor="87cefa" align="center"><p>内容</p></td>
@@ -120,6 +172,9 @@ div.chatbox{
 <td bgcolor="87cefa" align="center"><p>大学</p></td>
 <td ><p>{{ object_list.collegecategory }}</p></td></tr>
 <tr>
+  <td bgcolor="87cefa" align="center"><p>キャンパス</p></td>
+  <td ><p>{{ object_list.campus }}</p></td></tr>
+<tr>
   <td bgcolor="87cefa" align="center"><p>状態</p></td>
   <td><p>{{ object_list.status }}</p></td></tr>
   <tr>
@@ -127,24 +182,9 @@ div.chatbox{
     <td><p>￥{{ object_list.price }}</p></td></tr>
 </table>
 </div>
-<div class='chatbox'>
-    {% for message in chats%}
-    {% if message.sender == user.username %}
-    <div class="message">{{ message.text }} :    {{ message.sender }}</div><br>
-    {% endif %}
-    {% if message.sender != user.username %}
-    <div class="messageif">{{ message.sender }} : {{ message.text }}</div><br>
-    {% endif %}
-    {% endfor %}
-</div>
-    <div class='messagebox'>
-    <form action='' method='POSt' enctype='multipart/form-data'>
-      {% csrf_token %}
-        <h4>
-        {{form}}
-        <input type="submit"></h4>
-    </form>
-    </div>
+
+    <a href="{% url 'succeed' object_list.pk %}" class="btn btn-success btn-lg active" role="button" aria-pressed="true">取引完了</a>
+    <a href="{% url 'fail' object_list.pk %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">取引を取り消す</a>
 </div>
 
 {% endblock content %}

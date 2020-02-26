@@ -42,11 +42,30 @@
   </div>
 {% endblock header %}
 {% block content %}
+<p>ユーザーネームと性別は一度設定すると変更できません。大学名は学部等まで記入していただきますと、検索結果に反映されやすくなります。</p>
 <form action='' method='POST' enctype='multipart/form-data'>{% csrf_token %}
+  {% if error %}
+  {{ error }}
+  {% endif %}
+  {% if boolean == True %}
+  <table>
+  <tr>
+      <td>自己紹介</td>
+      <td>
+          {{form.intro}}
+      </td>
+  </tr>
+  <tr>
+    <td>大学</td>
+    <td>{{ form.college }}
+    </td>
+</tr>
+  </table>
+{% else %}
     <table>
             <tr>
                 <td>ユーザーネーム</td>
-                <td>{{user.username}}</td>
+                <td>{{form.username}}</td>
             </tr>
     <tr>
         <td>性別</td>
@@ -64,10 +83,13 @@
         </td>
     </tr>
     </table>
+    {% endif %}
     <input type='hidden' name='user' value='{{user.username}}'>
     <input type='submit' value='保存する'/>
     <input type="reset" value='取り消し'/>
+    
     </form>
+
 {% endblock content %}
 {% block footer %}
 {% endblock footer %}

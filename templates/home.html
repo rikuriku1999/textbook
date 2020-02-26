@@ -3,7 +3,7 @@
 <style>
 div.box{
     background-color: white;
-    width:800px;
+    width:100%;
     
 }
 
@@ -12,60 +12,78 @@ div.msgbox{
     border :solid;
     border-radius: 5px;
     border-color:rgb(22, 22, 22,0.7);
-    display: inline-block;
-    padding:10px;
-    margin:15px;
-    height:150px;
-    width:200px;
+    
+    padding:4px;
+    margin:4.8px;
+    height:100px;
+    width:30%;
+    float:left;
+}
+div.msgbox p{
+    font-size: 15px;
 }
 
 div.touroku h4{
     text-align: center;
     border-bottom: solid;
     border-color:rgb(183, 183, 224);
+    font-size: 17px;
 }
+
+div.prom h5{
+  text-align: left;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+div.prom{
+  width: 90%;
+  margin:0 auto;
+  
+}
+
+
 
 </style>
 {% endblock customcss %}
 {% block header %}
 <header class="sticky-top">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{% url 'list' %}" style="font-size: 50px; font-family:fantasy;">TexTrade</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'mypage' %}">マイページ <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">カテゴリ</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                カテゴリ
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'aoyama' %}">青山学院大学</a>
-                <a class="dropdown-item" href="{% url 'keio' %}">慶應義塾大学</a>
-                <a class="dropdown-item" href="#">早稲田大学</a>
-                <a class="dropdown-item" href="#">and so on</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0" action='' method="POST">{% csrf_token %}
-            {{ form.as_p }}
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </div>
-      </nav>
-    </header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="{% url 'list' %}" style="font-size: 50px; font-family:fantasy;">TexTrade</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'mypage' %}">マイページ <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              大学カテゴリ
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'aoyama' %}">青山学院大学</a>
+              <a class="dropdown-item" href="{% url 'keio' %}">慶應義塾大学</a>
+              <a class="dropdown-item" href="#">早稲田大学</a>
+              <a class="dropdown-item" href="#">and so on</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'logout' %}">ログアウト</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'login' %}">ログイン</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </header>
 <div class="alert alert-info"  role="alert"> 
     <h3>教科書販売サイトです
     いらない教科書を売りまくりましょう</h3>
@@ -74,32 +92,21 @@ div.touroku h4{
 {% endblock header %}
 {% block content %}
 <div class="box">
+<div class="prom">
+<h5>大学の教科書等をネットで売るとき、わざわざ配送料をかけたり
+  手数料を取られるの、なんかもったいないなと思ったことありませんか？<br>
+  そんな皆様のための、大学生限定の教科書取引サイトです！</h5></div>
 <div class="msgbox"><p>手数料、配送料0円だから安く買え、高く売れる！</p></div>
 <div class="msgbox"><p>実際に会うから先輩後輩の関係を広げられる！</p></div>
 <div class="msgbox"><p>古い教科書ならではの先輩達の書き込みも期待できる！</p></div>
+<div class="img"><p><img src="medi/prom3.jpg" width=100%></p></div>
 </div>
 <br>
 <div class="touroku"><h4>まずは登録してほしい教科書を見つけよう！</h4></div>
-<form class="form-signin" method='POST' action=''>{% csrf_token %}
-    <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-    <h1 class="h3 mb-3 font-weight-normal">新規登録</h1>
-    {% if error %}
-    {{ error }}
-    {% endif %}
-    <label for="inputUsername" class="sr-only">username</label>
-    <input type="text" id="inputUsername" class="form-control" name='username' placeholder="ユーザー名" required autofocus>
-    <label for="inputEmail" class="sr-only">email</label>
-    <input type="email" id="inputEmail" class="form-control" name='email' placeholder="メールアドレス" required autofocus>
-    <label for="inputPassword" class="sr-only">password</label>
-    <input type="password" id="inputPassword" class="form-control" name='password' placeholder="パスワード" required>
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> 次回ログインの時に自動で入力する
-      </label>
-    </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">新規登録</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
-  </form>
+
+    
+    
+    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="location.href='{% url 'user_create' %}'">新規登録</button>
 {% endblock content %}
 {% block footer %}
 {% endblock footer %}

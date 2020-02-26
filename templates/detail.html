@@ -3,15 +3,15 @@
 {% block customcss %}
 <style>
 div.image{
-  width:410px;
+  width:100%;
   border-color: black;
-  border:solid;
+  
   margin-bottom:20px;
   text-align: center;
 }
 
 div.box{
-    width:700px;
+    width:100%;
     margin:auto;
     background-color:#FFFFFF;
     text-align: left;
@@ -26,6 +26,8 @@ address{background-color: lightskyblue;
     }
 address a{color:#FFFEFF}
 h2{text-align: center;}
+
+
 </style>
 {% endblock customcss %}
 
@@ -73,18 +75,21 @@ h2{text-align: center;}
 <div class='box'>
 <h2>{{ object_list.title }}</h2>
 <div class="image" align="center">{% if object_list.images %}
-<p><img src="{{object_list.images.url}}" width=400 height=300  alt="..."></p>
+<p><img src="{{object_list.images.url}}" width=90% height=300 align="center" alt="..." ></p>
 {% endif %}</div>
-<table border="1" width="500" cellspacing="0" cellpadding="5" bordercolor="#333333">
+<table border="1" width="90%" cellspacing="0" cellpadding="5" bordercolor="#333333" align="center">
 <tr>
-<td bgcolor="87cefa" valign="top" width="150" align="center"><a href="{% url 'profile' object_list.pk %}">出品者</p></td>
-<td><p>{{ object_list.author }}</p></td></tr>
+<td bgcolor="87cefa" valign="top" width="100" align="center"><p>出品者</p></td>
+<td><a href="{% url 'profile' object_list.pk %}" title="{{ object_list.author }}">{{ object_list.author }}</a></td></tr>
 <tr>
 <td bgcolor="87cefa" align="center"><p>内容</p></td>
 <td><p>{{ object_list.content }}</p></td></tr>
 <tr>
 <td bgcolor="87cefa" align="center"><p>大学</p></td>
 <td ><p>{{ object_list.collegecategory }}</p></td></tr>
+<tr>
+  <td bgcolor="87cefa" align="center"><p>キャンパス</p></td>
+  <td ><p>{{ object_list.campus }}</p></td></tr>
 <tr>
   <td bgcolor="87cefa" align="center"><p>状態</p></td>
   <td><p>{{ object_list.status }}</p></td></tr>
@@ -94,26 +99,29 @@ h2{text-align: center;}
 </table>
 
 <a href="{% url 'good' object_list.pk %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">いいね:{{object_list.good}}</a>
-{% ifequal user.username object_list.author %}
+{% ifequal profile.username object_list.author %}
 <a href="{% url 'editdetail' object_list.pk %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">投稿編集</a>
 {% endifequal %}
-{% ifnotequal user.username object_list.author %}
+{% ifnotequal profile.username object_list.author %}
+{% if object_list.sold == False %}
 <a href="{% url 'chatroom' object_list.pk %}" class="btn btn-success btn-lg active" role="button" aria-pressed="true">取引する</a>
+{% endif %}
 {% endifnotequal %}
 
 
 <h2>コメント一覧</h2>
 {% for comment in comments %}
     <hr>
-     {{comment.author }}<br>
+     {{comment.author }}　　　{{ comment.created_date}}<br>
      {{ comment.text }}<br>
+     
      <hr>
 {% endfor %}
 <form action='' method='POSt' enctype='multipart/form-data'>
     {% csrf_token %}
     <div class="form-group mx-sm-3 mb-2">
       <label class="sr-only">コメント</label>
-      {{form.as_p}}
+      {{form.text}}
       <input type="submit">
     </div>
   </form>

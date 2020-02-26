@@ -25,7 +25,7 @@ SECRET_KEY = ')tvzz%hc8lm&8kev-@b0m_ubt=o*(wyn96ly4vu*mm254q+g8r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.0.4"]
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.forms',
     'textapp',
 ]
 
@@ -128,3 +129,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/medi/'
 
 LOGIN_URL='/login/'
+
+AUTH_USER_MODEL = 'textapp.User'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+LOGIN_REDIRECT_URL='list'
+
+LOGOUT_REDIRECT_URL='home'

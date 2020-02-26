@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block customscript %}
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 
     // HTMLの読み込み直後に実行：
     document.addEventListener('DOMContentLoaded', function() {
@@ -33,7 +33,7 @@
         }
 
     });
-</script>
+</script> -->
     
 {% endblock customscript %}
 {% block customcss %}
@@ -49,10 +49,6 @@
 <tr>
     <td>タイトル</td>
     <td><input type='text' name='title'></td>
-</tr>
-<tr>
-    <td>内容</td>
-    <td><input type='text' name='content'></td>
 </tr>
 <tr>
     <td>画像</td>
@@ -72,7 +68,8 @@
 <tr>
     
     <td>大学</td>
-    <td><div class="pulldownset college">
+    <td><input type='text' name='collegecategory'>
+        <!-- <div class="pulldownset college">
         <select class="mainselect" name="collegecategory">
         <option value=''>大学を選択</option>
         <option value="慶應義塾大学">慶應義塾大学</option>
@@ -111,14 +108,22 @@
         <option value='mb'>文学部</option>
         <option value='kt'>建築学部</option>
       </select>
-      </div>
+      </div> -->
     </td>
+</tr>
+<tr>
+    <td>受け渡したいキャンパス</td>
+    <td><input type='text' name='campus'></td>
 </tr>
 <tr>
     <td>値段</td>
     <td><input type='tel' name='price'></td>
 </tr>
-<input type='hidden' name='author' value='{{user.username}}'>
+<tr>
+    <td>内容</td>
+    <td><input type='text' name='content'></td>
+</tr>
+<input type='hidden' name='author' value='{{ user.profile.username }}'>
 </table>
 <input type='submit' value='作成する'>
 </form>
