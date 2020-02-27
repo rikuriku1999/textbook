@@ -1,42 +1,75 @@
 {% extends 'base.html' %}
+{% block customcss %}
+<style>
+  #id_college,#id_username{
+    position:relative;
+    width:250px;
+    height:35px;
+    border:solid;
+    border-width: 0.5px;
+    left:5px
+  }
+  #id_intro{
+    position:relative;
+    width:300px;
+    height:180px;
+    border:solid;
+    border-width:0.5px;
+    left:5px;
+  }
+  div.text{
+    position:relative;
+    left:5px;
+    top:10px;
+  }
+</style>
+{% endblock customcss %}
 {% block header %}
 <header class="sticky-top">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#" style="font-size: 50px; font-family:fantasy;">TexTrade</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">マイページ <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">カテゴリ</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                カテゴリ
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </div>
-      </nav>
-    </header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="{% url 'list' %}" style="font-size: 50px; font-family:fantasy;">TexTrade</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            
+          {% if boolean == True %}
+          <a class="nav-link" href="{% url 'mypage' %}">マイページ <span class="sr-only">(current)</span></a>
+          {% else %}
+          <a class="nav-link" href="{% url 'editmypage' %}">マイページ <span class="sr-only">(current)</span></a>
+          {% endif %}
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'goodlist' %}">いいねリスト</a>
+          </li>
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              大学カテゴリ
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'aoyama' %}">青山学院大学</a>
+              <a class="dropdown-item" href="{% url 'keio' %}">慶應義塾大学</a>
+              <a class="dropdown-item" href="#">早稲田大学</a>
+              <a class="dropdown-item" href="#">and so on</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+          </li> -->
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'logout' %}">ログアウト</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'login' %}">ログイン</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </header>
 <div class="alert alert-info"  role="alert"> 
     <h3>マイページ</h3>
   </div>
@@ -48,41 +81,24 @@
   {{ error }}
   {% endif %}
   {% if boolean == True %}
-  <table>
-  <tr>
-      <td>自己紹介</td>
-      <td>
-          {{form.intro}}
-      </td>
-  </tr>
-  <tr>
-    <td>大学</td>
-    <td>{{ form.college }}
-    </td>
-</tr>
-  </table>
+  <div class='text'><p>大学</p></div>
+        <p>{{form.college}}</p>
+        
+    <div class='text'><p>自己紹介</p></div>
+        <p>{{ form.intro }}</p>
+        
 {% else %}
-    <table>
-            <tr>
-                <td>ユーザーネーム</td>
-                <td>{{form.username}}</td>
-            </tr>
-    <tr>
-        <td>性別</td>
-        <td>{{form.gender}}</td>
-    </tr>
-    <tr>
-        <td>大学</td>
-        <td>{{ form.college }}
-        </td>
-    </tr>
-    <tr>
-        <td>自己紹介</td>
-        <td>
-            {{form.intro}}
-        </td>
-    </tr>
-    </table>
+    <div class='text'><p>ユーザーネーム</p></div>
+        <p>{{form.username}}</p>
+        
+    <div class='text'><p>性別</p></div>
+        <p>{{ form.gender }}</p>
+    <div class='text'><p>大学</p></div>
+        <p>{{form.college}}</p>
+        
+    <div class='text'><p>自己紹介</p></div>
+        <p>{{ form.intro }}</p>
+
     {% endif %}
     <input type='hidden' name='user' value='{{user.username}}'>
     <input type='submit' value='保存する'/>
@@ -92,4 +108,8 @@
 
 {% endblock content %}
 {% block footer %}
+<address>
+  Copy Right <a href="">TexTrade</a>
+   Co.,Ltd. since 2020
+</address>
 {% endblock footer %}

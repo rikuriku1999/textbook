@@ -9,6 +9,15 @@ div.box{
   padding-right:0px;
   }
 
+  address{background-color: lightskyblue;
+  color: #FFFFFF;
+  text-align: center;
+  margin-top: 20px;
+  bottom:0px;
+  width:100% ;
+  }
+address a{color:#FFFEFF}
+
 div.messagebox{
   position:relative;
   bottom:0px;
@@ -17,39 +26,38 @@ div.messagebox{
 }
 
 div.msg{
-  padding-top: 15px;
+  padding-top: 10px;
+  padding-bottom:30px;
 }
-
 
 
 div.message{
   position:absolute;
-  right:5px;
+  right:2px;
   background-color: rgb(150, 217, 219,0.7);
   border-radius: 5px;
   padding:0;
   margin-top: 18px;
   margin-bottom: 18px;
-  max-width: 100%;
-  display: inline-block;
-  padding-left: 20px;
-  padding-right: 20px;
+  max-width: 80%;
+  
+  padding-left: 10px;
+  padding-right: 10px;
   border:solid;
   border-width: 1px;
   border-color:rgb(51, 50, 50,0.6);
 }
 
 div.messageif{
-  position: absolute;;
-  left:5px;
+  position: absolute;
+  left:2px;
   background-color: rgb(150, 217, 219,0.7);
   border-radius: 5px;
   margin-top: 18px;
   margin-bottom: 18px;
-  max-width: 100%;
-  display: inline-block;
-  padding-left: 20px;
-  padding-right: 20px;
+  max-width: 80%;
+  padding-left: 10px;
+  padding-right: 10px;
   border:solid;
   border-width:1px;
   border-color:rgb(51, 50, 50,0.6);
@@ -85,6 +93,11 @@ div.dateif{
 
 div.dateif p{
   font-size: 10px;
+}
+#id_text{
+  width:260px;
+  height:60px;
+
 }
 </style>
 {% endblock customcss %}
@@ -141,7 +154,7 @@ div.dateif p{
     <div class="date"><p>{{ message.created_date }}</p></div>
     {% endif %}
     {% if message.sender != profile.username %}
-    <div class="messageif">{{ message.sender }} : {{ message.text }}</div><br>
+    <div class="messageif">{{ message.text }}</div><br>
     <div class="dateif"><p>{{ message.created_date }}</p></div>
     {% endif %}
     </div>
@@ -150,9 +163,9 @@ div.dateif p{
     <div class='messagebox'>
     <form action='' method='POSt' enctype='multipart/form-data' value=''>
       {% csrf_token %}
-        <h4>
+        <h6>
         {{form.text}}
-        <input type="button" value='送信' onclick="rset(this.form)"></h4>
+        <input type="button" value='送信' onclick="rset(this.form)"></h6>
     </form>
     </div>
 
@@ -164,7 +177,7 @@ div.dateif p{
 <table border="1" width="100%" cellspacing="0" cellpadding="5" bordercolor="#333333" align="center">
 <tr>
 <td bgcolor="87cefa" valign="top" width="100px" align="center"><p>出品者</p></td>
-<td><p>{{ object_list.author }}</p></td></tr>
+<td><a href="{% url 'profile' object_list.pk %}" title="{{ object_list.author }}">{{ object_list.author }}</a></td></tr>
 <tr>
 <td bgcolor="87cefa" align="center"><p>内容</p></td>
 <td><p>{{ object_list.content }}</p></td></tr>
@@ -189,4 +202,8 @@ div.dateif p{
 
 {% endblock content %}
 {% block footer %}
+<address>
+  Copy Right <a href="">TexTrade</a>
+   Co.,Ltd. since 2020
+</address>
 {% endblock footer %}

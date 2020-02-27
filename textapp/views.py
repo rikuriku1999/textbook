@@ -376,12 +376,13 @@ def editdetailfunc(request,pk):
 
 
 def detailfunc(request,pk):
+    boolean = False
     object_list = Textbookmodel.objects.get(pk=pk)
-    boolean = Usermodel.objects.filter(user__exact=request.user).exists()
     comments = Commentmodel.objects.filter(target=object_list)
     form = forms.CommentForm(request.POST or None)
     print(request.user.is_active)
     if request.user.is_active:
+        boolean = Usermodel.objects.filter(user__exact=request.user).exists()
         if boolean == True:
             profile = Usermodel.objects.filter(user__exact=request.user).get()
             print(profile.username)
@@ -420,7 +421,6 @@ def detailfunc(request,pk):
             'object_list':object_list,
             'form':form,
             'comments':comments,
-            'boolean':boolean,
             })
 
 

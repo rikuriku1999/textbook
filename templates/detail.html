@@ -29,46 +29,68 @@ h2{text-align: center;}
 
 
 </style>
+<script>
+  $.getScript("./script.js");
+</script>
+<script>
+  $('#delete').click(function(){
+      if(!confirm('本当に削除しますか？')){
+          /* キャンセルの時の処理 */
+          return false;
+      }else{
+          /*　OKの時の処理 */
+          location.href = 'index.html';
+      }
+  });
+  </script>
 {% endblock customcss %}
 
 {% block header %}
 <header class="sticky-top">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{% url 'list' %}" style="font-size: 50px; font-family:fantasy;">TexTrade</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">マイページ<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">カテゴリ</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                カテゴリ
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-          </ul>
-          
-        </div>
-      </nav>
-    </header>
-<div class="alert alert-info"  role="alert"> 
- 
-  </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="{% url 'list' %}" style="font-size: 50px; font-family:fantasy;">TexTrade</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            
+          {% if boolean == True %}
+          <a class="nav-link" href="{% url 'mypage' %}">マイページ <span class="sr-only">(current)</span></a>
+          {% else %}
+          <a class="nav-link" href="{% url 'editmypage' %}">マイページ <span class="sr-only">(current)</span></a>
+          {% endif %}
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'goodlist' %}">いいねリスト</a>
+          </li>
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              大学カテゴリ
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'aoyama' %}">青山学院大学</a>
+              <a class="dropdown-item" href="{% url 'keio' %}">慶應義塾大学</a>
+              <a class="dropdown-item" href="#">早稲田大学</a>
+              <a class="dropdown-item" href="#">and so on</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+          </li> -->
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'logout' %}">ログアウト</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'login' %}">ログイン</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </header>
 {% endblock header %}
 
 {% block content %}
@@ -104,7 +126,7 @@ h2{text-align: center;}
 {% endifequal %}
 {% ifnotequal profile.username object_list.author %}
 {% if object_list.sold == False %}
-<a href="{% url 'chatroom' object_list.pk %}" class="btn btn-success btn-lg active" role="button" aria-pressed="true">取引する</a>
+<a href="{% url 'chatroom' object_list.pk %}" class="btn btn-success btn-lg active" role="button" aria-pressed="true" id="delete">取引する</a>
 {% endif %}
 {% endifnotequal %}
 

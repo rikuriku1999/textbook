@@ -37,7 +37,7 @@ class CommentForm(forms.ModelForm):
         fields = ('text',)
     
     text = forms.CharField(
-        widget=forms.TextInput(),
+        widget=forms.Textarea(),
         required=False,
         max_length=30,
         initial=''
@@ -130,9 +130,9 @@ class ChatForm(forms.ModelForm):
         fields = ('text',)
     text = forms.CharField(
         initial='',
-        max_length=200,
+        max_length=32,
         required = True,
-        widget = forms.TextInput,
+        widget = forms.Textarea,
     )
 
 class SearchForm(forms.Form):
