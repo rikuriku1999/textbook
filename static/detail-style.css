@@ -1,0 +1,25 @@
+html,
+div.image{
+  width:100%;
+  border-color: black;
+  
+  margin-bottom:20px;
+  text-align: center;
+}
+
+div.box{
+    width:100%;
+    margin:auto;
+    background-color:#FFFFFF;
+    text-align: left;
+    position: relative;}
+    
+address{background-color: lightskyblue;
+    color: #FFFFFF;
+    text-align: center;
+    position: relative;
+    bottom:0px;
+    width:100%;
+    }
+address a{color:#FFFEFF}
+h2{text-align: center;}

@@ -1,50 +1,7 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block customcss %}
-<style>
-div.box{
-    background-color: white;
-    width:100%;
-    
-}
-
-div.msgbox{
-    background-color:rgb(215, 253, 253);
-    border :solid;
-    border-radius: 5px;
-    border-color:rgb(22, 22, 22,0.7);
-    
-    padding:4px;
-    margin:4.8px;
-    height:100px;
-    width:30%;
-    float:left;
-}
-div.msgbox p{
-    font-size: 15px;
-}
-
-div.touroku h4{
-    text-align: center;
-    border-bottom: solid;
-    border-color:rgb(183, 183, 224);
-    font-size: 17px;
-}
-
-div.prom h5{
-  text-align: left;
-  font-weight: bold;
-  font-size: 17px;
-}
-
-div.prom{
-  width: 90%;
-  margin:0 auto;
-  
-}
-
-
-
-</style>
+<link rel='stylesheet' type='text/css' href="{% static 'home-style.css' %}">
 {% endblock customcss %}
 {% block header %}
 <header class="sticky-top">

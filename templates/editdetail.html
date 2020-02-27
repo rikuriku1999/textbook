@@ -1,40 +1,7 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block customcss %}
-<style>
-  #id_title, #id_collegecategory, #id_campus{
-    position:relative;
-    width:250px;
-    height:35px;
-    border:solid;
-    border-width: 0.5px;
-    left:5px
-  }
-  #id_content{
-    position:relative;
-    width:300px;
-    height:180px;
-    border:solid;
-    border-width:0.5px;
-    left:5px;
-  }
-  #id_images, #id_status{
-    position:relative;
-    left:5px;
-  }
-  #id_price{
-    position:relative;
-    width:180px;
-    height:35px;
-    border:solid;
-    border-width:0.5px;
-    left:5px;
-  }
-  div.text{
-    position:relative;
-    left:5px;
-    top:10px;
-  }
-</style>
+<link rel='stylesheet' type='text/css' href="{% static 'editdetail-style.css' %}">
 {% endblock customcss %}
 {% block header %}
 <header class="sticky-top">
