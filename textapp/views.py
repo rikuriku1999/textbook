@@ -664,4 +664,3 @@ class Login(LoginView):
 class Logout(LogoutView):
     """ログアウトページ"""
     template_name = 'list.html'
-   
