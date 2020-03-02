@@ -76,9 +76,9 @@
     <p><img src="{{item.images.url}}" width=150 height=110 class="card-img-top" alt="..."></p>
   {% endif %}
   {% if item.sold == True %}
-  <div class="sold"><img src="/medi/sold.png?20200223" width=80px height=80px class="img-top" alt="sold"/></div>
+  <div class="sold"><img src="/media/sold.png?20200223" width=80px height=80px class="img-top" alt="sold"/></div>
   {% elif item.trading == True %}
-  <div class="trading"><img src="/medi/trading.png" width=80px height=80px></div>
+  <div class="trading"><img src="/media/trading.png" width=80px height=80px></div>
   {% endif %}
   <div class="price"><p>￥{{item.price}}</p>
   </div>
@@ -91,7 +91,7 @@
 {% endfor%}
 </div>
 <div class="post"><a href="{% url 'create' %}"></a>
-<div class="create"><img src="/medi/syuppin3.png" width=80px height=80px></div>
+<div class="create"><img src="/media/syuppin3.png" width=80px height=80px></div>
 </div>
 </div>
 
@@ -107,6 +107,6 @@
 {% block footer %}
 <address>
   Copy Right <a href="">TexTrade</a>
-   Co.,Ltd. since 2020
+    since 2020
 </address>
 {% endblock footer %}

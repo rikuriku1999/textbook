@@ -20,3 +20,16 @@ html,
     left:5px;
     top:10px;
   }
+  address{background-color: lightskyblue;
+    color: #FFFFFF;
+    text-align: center;
+    position: relative;
+    bottom:0px;
+    width:100% ;
+  }
+  address a{
+     color:#FFFEFF
+  }
+  div.box{
+    width:100%;
+  }

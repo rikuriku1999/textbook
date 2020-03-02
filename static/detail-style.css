@@ -8,11 +8,14 @@ div.image{
 }
 
 div.box{
-    width:100%;
-    margin:auto;
-    background-color:#FFFFFF;
-    text-align: left;
-    position: relative;}
+  width:100%;
+ margin:auto;
+ background-color:#FFFFFF;
+ position: relative;
+ padding-right:0px;
+ padding-bottom:100px;
+ min-height: 100vh;
+ box-sizing: border-box;}
     
 address{background-color: lightskyblue;
     color: #FFFFFF;

@@ -11,11 +11,12 @@
     {% endfor %}
     {% csrf_token %}
     <button type="submit" class="btn btn-primary btn-lg">送信</button>
+    <input type="hidden" name="next" value="{{ next }}">
 </form>
 {% endblock %}
 {% block footer %}
 <address>
   Copy Right <a href="">TexTrade</a>
-   Co.,Ltd. since 2020
+    since 2020
 </address>
 {% endblock footer %}

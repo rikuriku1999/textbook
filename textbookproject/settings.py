@@ -22,7 +22,7 @@ SECRET_KEY = ')tvzz%hc8lm&8kev-@b0m_ubt=o*(wyn96ly4vu*mm254q+g8r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.0.5"]
+ALLOWED_HOSTS = ["192.168.0.10"]
 
 
 # Application definition
@@ -123,7 +123,7 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-MEDIA_URL = '/medi/'
+MEDIA_URL = '/media/'
 
 LOGIN_URL='/login/'
 
@@ -131,6 +131,6 @@ AUTH_USER_MODEL = 'textapp.User'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-LOGIN_REDIRECT_URL='list'
+LOGIN_REDIRECT_URL='editmypage'
 
 LOGOUT_REDIRECT_URL='home'

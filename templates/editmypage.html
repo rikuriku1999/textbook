@@ -1,7 +1,48 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block customcss %}
-<link rel='stylesheet' type='text/css' href="{% static 'editmypage-style.css' %}">
+<style>
+#id_college,#id_username{
+    position:relative;
+    width:250px;
+    height:35px;
+    border:solid;
+    border-width: 0.5px;
+    left:5px
+  }
+  #id_intro{
+    position:relative;
+    width:300px;
+    height:180px;
+    border:solid;
+    border-width:0.5px;
+    left:5px;
+  }
+  div.text{
+    position:relative;
+    left:5px;
+    top:10px;
+  }
+  address{background-color: lightskyblue;
+    color: #FFFFFF;
+    text-align: center;
+    position: relative;
+    bottom:0px;
+    width:100% ;
+  }
+  address a{
+     color:#FFFEFF
+  }
+  div.box{
+    width:100%;
+   margin:auto;
+   background-color:#FFFFFF;
+   position: relative;
+   padding-right:0px;
+   padding-bottom:100px;
+   min-height: 100vh;
+   box-sizing: border-box;}
+</style>
 {% endblock customcss %}
 {% block header %}
 <header class="sticky-top">
@@ -54,6 +95,7 @@
   </div>
 {% endblock header %}
 {% block content %}
+<div class="box">
 <p>ユーザーネームと性別は一度設定すると変更できません。大学名は学部等まで記入していただきますと、検索結果に反映されやすくなります。</p>
 <form action='' method='POST' enctype='multipart/form-data'>{% csrf_token %}
   {% if error %}
@@ -84,11 +126,11 @@
     <input type="reset" value='取り消し'/>
     
     </form>
-
+</div>
 {% endblock content %}
 {% block footer %}
 <address>
   Copy Right <a href="">TexTrade</a>
-   Co.,Ltd. since 2020
+    since 2020
 </address>
 {% endblock footer %}

@@ -1,7 +1,59 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block customcss %}
-<link rel='stylesheet' type='text/css' href="{% static 'editdetail-style.css' %}">
+<style>
+  #id_title, #id_collegecategory, #id_campus{
+    position:relative;
+    width:250px;
+    height:35px;
+    border:solid;
+    border-width: 0.5px;
+    left:5px
+  }
+  #id_content{
+    position:relative;
+    width:300px;
+    height:180px;
+    border:solid;
+    border-width:0.5px;
+    left:5px;
+  }
+  #id_images, #id_status{
+    position:relative;
+    left:5px;
+  }
+  #id_price{
+    position:relative;
+    width:180px;
+    height:35px;
+    border:solid;
+    border-width:0.5px;
+    left:5px;
+  }
+  div.text{
+    position:relative;
+    left:5px;
+    top:10px;
+  }
+  address{background-color: lightskyblue;
+    color: #FFFFFF;
+    text-align: center;
+    position: relative;
+    bottom:0px;
+    width:100% ;
+  }
+  address a{
+     color:#FFFEFF
+  }
+  div.box{
+    width:100%;
+   margin:auto;
+   background-color:#FFFFFF;
+   position: relative;
+   padding-right:0px;
+   padding-bottom:100px;
+   min-height: 100vh;
+   box-sizing: border-box;}
+</style>
 {% endblock customcss %}
 {% block header %}
 <header class="sticky-top">
@@ -54,6 +106,7 @@
   </div>
 {% endblock header %}
 {% block content %}
+<div class="box">
 <form action='' method='POST' enctype='multipart/form-data'>{% csrf_token %}
     
     
@@ -94,10 +147,11 @@
     {% if post%}
     <a href="{% url 'delete' detail.pk %}">投稿を削除</a>
     {% endif %}
+    </div>
 {% endblock content %}
 {% block footer %}
 <address>
   Copy Right <a href="">TexTrade</a>
-   Co.,Ltd. since 2020
+   since 2020
 </address>
 {% endblock footer %}
