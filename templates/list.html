@@ -67,6 +67,9 @@
 {% block content %}
 <div class="box">
 <div class="listcontainer">
+<script>
+  var a = 0
+</script>
 {% for item in object_lists %}
 <div class="card-card" >
 <a href="{% url 'detail' item.pk %}"></a>
@@ -88,6 +91,9 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript" src="{% static 'list-script.js' %}"></script>
+
 {% endfor%}
 </div>
 <div class="post"><a href="{% url 'create' %}"></a>
@@ -105,8 +111,4 @@
 {% endblock content %}
 
 {% block footer %}
-<address>
-  Copy Right <a href="">TexTrade</a>
-    since 2020
-</address>
 {% endblock footer %}

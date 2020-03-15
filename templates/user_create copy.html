@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% load static%}
 {% block customcss %}
-<style>
+<link rel='stylesheet' type='text/css' href="{% static 'login-style.css' %}">
+<!-- <style>
 body {
   height: 100%;
 }
@@ -44,8 +46,58 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-</style>
+</style> -->
 {% endblock customcss %}
+{% block header %}
+<header class="sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="{% url 'list' %}" style="font-size: 50px; font-family:fantasy;">TexTrade</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            
+          {% if boolean == True %}
+          <a class="nav-link" href="{% url 'mypage' %}">マイページ <span class="sr-only">(current)</span></a>
+          {% else %}
+          <a class="nav-link" href="{% url 'editmypage' %}">マイページ <span class="sr-only">(current)</span></a>
+          {% endif %}
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'goodlist' %}">いいねリスト</a>
+          </li>
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              大学カテゴリ
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'aoyama' %}">青山学院大学</a>
+              <a class="dropdown-item" href="{% url 'keio' %}">慶應義塾大学</a>
+              <a class="dropdown-item" href="#">早稲田大学</a>
+              <a class="dropdown-item" href="#">and so on</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+          </li> -->
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'logout' %}">ログアウト</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'login' %}">ログイン</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <div class="alert alert-info"  role="alert"> 
+    <h3>会員登録</h3>
+  </div>
+{% endblock header %}
 {% block content %}
 <form class="form-signin" action="" method="POST">
     {{ form.non_field_errors }}
@@ -56,7 +108,8 @@ body {
         <hr>
     {% endfor %}
     {% csrf_token %}
-    <button type="submit" class="btn btn-primary btn-block">登録</button>
+    <p>無料会員登録をクリックすると、<br><a href='{% url "terms" %}'>利用規約</a>と<a href="{% url 'privacy' %}">プライバシーポリシー</a>に同意したものとみなします</p>
+    <button type="submit" class="btn btn-primary btn-block">無料登録</button>
     <a href="{% url 'login' %}"   >ログインする</a>
 
 </form>

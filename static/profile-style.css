@@ -9,14 +9,17 @@ div.box{
  min-height: 100vh;
  box-sizing: border-box;}
  
-  address{background-color: lightskyblue;
-    color: #FFFFFF;
-    text-align: center;
-    position: absolute;
-    bottom:0px;
-    width:100%;
-    }
-   address a{color:#FFFEFF}
+ address{background-color: lightskyblue;
+  color: #FFFFFF;
+  text-align: center;
+  position: absolute;
+  bottom:0px;
+  width:100%;
+  }
+ 
+  div.footer{
+    padding-bottom:50px;
+  }
  
  div.card-card{
      margin:1px;
@@ -85,14 +88,18 @@ div.box{
    font-size: 14px;
  }
  
- div.trading{
-   display: flex;
-     justify-content: center;
-     align-items: center;
-     cursor: pointer;
-     position: absolute;
-     top: 26%;
-     left: 30%;
-     width: 5px;
-     height: 5px;
- }
+ div.sold{
+ 
+  position: absolute;
+  top: -2%;
+  left: -2%;
+  
+}
+
+div.trading{
+display: flex;
+  position: absolute;
+  top: -4%;
+  left: -3%;
+  
+}

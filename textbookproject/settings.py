@@ -22,7 +22,7 @@ SECRET_KEY = ')tvzz%hc8lm&8kev-@b0m_ubt=o*(wyn96ly4vu*mm254q+g8r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.0.10"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -131,6 +131,6 @@ AUTH_USER_MODEL = 'textapp.User'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-LOGIN_REDIRECT_URL='editmypage'
+LOGIN_REDIRECT_URL='list'
 
 LOGOUT_REDIRECT_URL='home'

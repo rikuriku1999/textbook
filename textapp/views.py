@@ -194,6 +194,7 @@ def chatroomfunc(request,pk):
                         Todomodel.objects.filter(user__exact=profile2).filter(types__exact='msg').delete()
                     except Todomodel.DoesNotExist :
                         pass
+                    return redirect('chatroom', pk=pk)
 
                 else:
                     print(object_list.author)
@@ -214,6 +215,7 @@ def chatroomfunc(request,pk):
                         Todomodel.objects.filter(user__exact=profile3).filter(types__exact='msg').delete()
                     except Todomodel.DoesNotExist :
                         pass
+                    return redirect('chatroom',pk=pk)
             else:
                 form = forms.ChatForm()
         return render(request, 'chatroom.html',{
@@ -396,6 +398,7 @@ def detailfunc(request,pk):
                     comment.target = object_list
                     comment.author = profile.username
                     comment.save()
+                    return redirect('detail', pk=pk)
                 else:
                     form = forms.CommentForm()
     else :
@@ -548,7 +551,7 @@ def loginfunc(request):
 
 
 def homefunc(request):
-    if request.method =='POST':
+    """ if request.method =='POST':
         username2 = request.POST['username']
         email2 = request.POST['email']
         password2 = request.POST['password']
@@ -558,8 +561,17 @@ def homefunc(request):
 
         except :
             user = User.objects.create_user(username2, email2 , password2)
-            return redirect('login')
-    return render(request, 'home.html', {'some':100})
+            return redirect('login') """
+    boolean = None
+    if request.user.is_active:
+        try:
+            user = Usermodel.objects.filter(user__exact=request.user).get()
+            boolean=Usermodel.objects.filter(user__exact=request.user).exists()
+        except Usermodel.DoesNotExist:
+            boolean = None
+    return render(request, 'home.html', {
+        'boolean':boolean
+        })
 
 @login_required
 def goodfunc(request,pk):
@@ -664,3 +676,9 @@ class Login(LoginView):
 class Logout(LogoutView):
     """ログアウトページ"""
     template_name = 'list.html'
+
+def privacyfunc(request):
+    return render(request, 'privacy.html')
+
+def termsfunc(request):
+    return render(request, 'terms.html')

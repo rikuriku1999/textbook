@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.urls import path
-from .views import listfunc ,Create ,detailfunc ,mypagefunc ,loginfunc  ,goodfunc ,profilefunc ,editmypagefunc ,deletefunc ,editdetailfunc ,chatfunc ,chatroomfunc ,aoyamafunc ,keiofunc ,profilefunc ,goodlistfunc ,homefunc ,logoutfunc,Login ,Logout, succeedfunc ,failfunc ,squeezefunc ,createfunc
+from .views import listfunc ,Create ,detailfunc ,mypagefunc ,loginfunc  ,goodfunc ,profilefunc ,editmypagefunc ,deletefunc ,editdetailfunc ,chatfunc ,chatroomfunc ,aoyamafunc ,keiofunc ,profilefunc ,goodlistfunc ,homefunc ,logoutfunc,Login ,Logout, succeedfunc ,failfunc ,squeezefunc ,createfunc ,privacyfunc ,termsfunc
 from . import views
 from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView 
 
 urlpatterns = [
     path('list/',listfunc,name='list'),
@@ -28,4 +29,7 @@ urlpatterns = [
     path('succeed/<int:pk>', succeedfunc, name='succeed'),
     path('fail/<int:pk>',failfunc,name="fail"),
     path('squeeze/',squeezefunc, name="squeeze"),
+    path('privacy/',privacyfunc, name="privacy"),
+    path('terms/',termsfunc, name="terms"),
+    path('ads.txt', TemplateView.as_view(template_name='textapp/ads.txt',content_type='text/plain')),
 ]

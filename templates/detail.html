@@ -114,18 +114,14 @@
 {% endfor %}
 <form action='' method='POSt' enctype='multipart/form-data'>
     {% csrf_token %}
-    <div class="form-group mx-sm-3 mb-2">
-      <label class="sr-only">コメント</label>
+    
+      
       {{form.text}}
       <input type="submit">
-    </div>
+    
   </form>
 </div>
 {% endblock content %}
 
 {% block footer %}
-<address>
-    Copy Right <a href="">TexTrade</a>
-      since 2020
-  </address>
 {% endblock footer %}

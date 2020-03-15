@@ -1,0 +1,12 @@
+html,
+address{background-color: lightskyblue;
+    color: #FFFFFF;
+    text-align: center;
+    position: relative;
+    bottom:0px;
+    width:100%;
+    }
+   
+    div.footer{
+      padding-bottom:50px;
+    }

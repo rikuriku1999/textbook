@@ -7,13 +7,16 @@ div.box{
    }
  
    address{background-color: lightskyblue;
-   color: #FFFFFF;
-   text-align: center;
-   margin-top: 20px;
-   bottom:0px;
-   width:100% ;
-   }
- address a{color:#FFFEFF}
+    color: #FFFFFF;
+    text-align: center;
+    position: relative;
+    bottom:0px;
+    width:100%;
+    }
+   
+    div.footer{
+      padding-bottom:50px;
+    }
  
  div.messagebox{
    position:relative;
@@ -94,5 +97,7 @@ div.box{
  #id_text{
    width:260px;
    height:60px;
+   position:relative;
+   left:10px;
  
  }

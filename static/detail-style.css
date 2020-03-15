@@ -17,12 +17,24 @@ div.box{
  min-height: 100vh;
  box-sizing: border-box;}
     
-address{background-color: lightskyblue;
-    color: #FFFFFF;
-    text-align: center;
-    position: relative;
-    bottom:0px;
-    width:100%;
-    }
-address a{color:#FFFEFF}
+ address{background-color: lightskyblue;
+  color: #FFFFFF;
+  text-align: center;
+  position: relative;
+  bottom:0px;
+  width:100%;
+  }
+ 
+  div.footer{
+    padding-bottom:50px;
+  }
 h2{text-align: center;}
+
+#id_text{
+  width:300px;
+  height:60px;
+  border:solid;
+  border-width: 0.5px;
+  position:relative;
+  left:5px;
+}

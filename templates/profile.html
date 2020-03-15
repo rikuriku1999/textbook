@@ -54,6 +54,16 @@
   </div>
 {% endblock header %}
 {% block content %}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-fb+5w+4e-db+86"
+     data-ad-client="ca-pub-8034957177909576"
+     data-ad-slot="4710267322"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 <div class="box">
 <table>
   <tr>
@@ -80,7 +90,11 @@
   {% if item.images %}
     <p><img src="{{item.images.url}}" width=150 height=110 class="card-img-top" alt="..."></p>
   {% endif %}
+  {% if item.sold == True %}
+  <div class="sold"><img src="/media/sold.png?20200223" width=80px height=80px class="img-top" alt="sold"/></div>
+  {% elif item.trading == True %}
   <div class="trading"><img src="/media/trading.png" width=80px height=80px></div>
+  {% endif %}
   <div class="price"><p>￥{{item.price}}</p>
   </div>
   </div>
@@ -102,10 +116,7 @@
 
 {% endblock content %}
 {% block footer %}
-<address>
-  Copy Right <a href="">TexTrade</a>
-    since 2020
-</address>
+
 {% endblock footer %}
 
 

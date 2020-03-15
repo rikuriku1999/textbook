@@ -49,10 +49,10 @@
       </div>
     </nav>
   </header>
-<div class="alert alert-info"  role="alert"> 
-    <h3>教科書販売サイトです
-    いらない教科書を売りまくりましょう</h3>
-    <h5>実際に会って交換してもらいます</h5>
+  <div class="alert alert-info"  role="alert"> 
+    <h3>学生の教科書販売サイト<br>
+    </h3>
+    <h6>必要のない教科書を必要としてる人へ</h6>
   </div>
 {% endblock header %}
 {% block content %}
@@ -67,15 +67,12 @@
 <div class="img"><p><img src="media/prom3.jpg" width=100%></p></div>
 </div>
 <br>
-<div class="touroku"><h4>まずは登録してほしい教科書を見つけよう！</h4></div>
+<div class="touroku"><h4>まずは無料登録しよう！</h4></div>
 
     
     
     <button class="btn btn-lg btn-primary btn-block" type="button" onclick="location.href='{% url 'user_create' %}'">新規登録</button>
 {% endblock content %}
 {% block footer %}
-<address>
-  Copy Right <a href="">TexTrade</a>
-    since 2020
-</address>
+
 {% endblock footer %}

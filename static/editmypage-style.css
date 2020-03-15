@@ -23,13 +23,21 @@ html,
   address{background-color: lightskyblue;
     color: #FFFFFF;
     text-align: center;
-    position: relative;
+    position: absolute;
     bottom:0px;
-    width:100% ;
-  }
-  address a{
-     color:#FFFEFF
-  }
+    width:100%;
+    }
+   
+    div.footer{
+      padding-bottom:50px;
+    }
+    
   div.box{
     width:100%;
-  }
+   margin:auto;
+   background-color:#FFFFFF;
+   position: relative;
+   padding-right:0px;
+   padding-bottom:100px;
+   min-height: 100vh;
+   box-sizing: border-box;}
